@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Appointment({ setActiveSection,fetchAppointments }) {
 
@@ -33,7 +34,7 @@ function Appointment({ setActiveSection,fetchAppointments }) {
       try {
 
         const response = await axios.get(
-          "http://localhost:5000/api/hospitals"
+          `${API_URL}/api/hospitals`
         );
 
         setHospitals(response.data);
@@ -64,7 +65,7 @@ function Appointment({ setActiveSection,fetchAppointments }) {
     try {
 
       const response = await axios.get(
-        `http://localhost:5000/api/doctors/hospital/${hospitalId}`
+        `${API_URL}/api/doctors/hospital/${hospitalId}`
       );
 
       setDoctors(response.data);
@@ -91,7 +92,7 @@ function Appointment({ setActiveSection,fetchAppointments }) {
       console.log("TOKEN =", token);
 
       await axios.post(
-        "http://localhost:5000/api/appointments/create",
+        `${API_URL}/api/appointments/create`,
         {
           patientId: patient._id,
           hospitalId: formData.hospitalId,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function HospitalDashboard() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ function HospitalDashboard() {
 
       await axios.post(
 
-        "http://localhost:5000/api/doctors/create",
+        `${API_URL}/api/doctors/create`,
 
         {
 
@@ -85,7 +86,7 @@ function HospitalDashboard() {
       try {
 
         const response = await axios.get(
-          `http://localhost:5000/api/appointments/hospital/${id}`
+          `${API_URL}/api/appointments/hospital/${id}`
         );
 
         setAppointments(response.data);
@@ -103,7 +104,7 @@ function HospitalDashboard() {
         try {
 
           const response = await axios.get(
-            `http://localhost:5000/api/appointments/hospital/${id}/patients`
+            `${API_URL}/api/appointments/hospital/${id}/patients`
           );
 
           setPatients(response.data);
@@ -124,7 +125,7 @@ function HospitalDashboard() {
       try {
 
         await axios.put(
-          `http://localhost:5000/api/appointments/${appointmentId}/status`,
+          `${API_URL}/api/appointments/${appointmentId}/status`,
           { status }
         );
 
@@ -143,7 +144,7 @@ function HospitalDashboard() {
       try {
 
         await axios.post(
-          "http://localhost:5000/api/prescriptions/create",
+          `${API_URL}/api/prescriptions/create`,
           {
 
             patientId:
@@ -172,7 +173,7 @@ function HospitalDashboard() {
         );
 
         await axios.put(
-          `http://localhost:5000/api/appointments/${selectedAppointment._id}/prescription`
+          `${API_URL}/api/appointments/${selectedAppointment._id}/prescription`
         );
 
         alert(
@@ -198,7 +199,7 @@ function HospitalDashboard() {
     const response =
     await axios.get(
 
-      `http://localhost:5000/api/doctors/hospital/${hospital._id}`
+      `${API_URL}/api/doctors/hospital/${hospital._id}`
 
     );
 
@@ -212,13 +213,13 @@ function HospitalDashboard() {
     const fetchData = async () => {
       try {
         const hospitalResponse = await axios.get(
-          `http://localhost:5000/api/hospitals/${id}`
+          `${API_URL}/api/hospitals/${id}`
         );
 
         setHospital(hospitalResponse.data);
 
         const doctorResponse = await axios.get(
-          `http://localhost:5000/api/doctors/hospital/${id}`
+          `${API_URL}/api/doctors/hospital/${id}`
         );
 
         setDoctors(doctorResponse.data);

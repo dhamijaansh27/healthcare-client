@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function NearbyHospital() {
 
@@ -12,7 +13,7 @@ function NearbyHospital() {
       try {
 
         const response = await axios.get(
-          "http://localhost:5000/api/hospitals"
+          `${API_URL}/api/hospitals`
         );
 
         setHospitals(response.data);

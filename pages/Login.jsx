@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function PatientLogin() {
 
@@ -27,7 +28,7 @@ function PatientLogin() {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/patients/login",
+        `${API_URL}/api/patients/login`,
         formData
       );
 

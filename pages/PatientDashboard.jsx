@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Appointment from "./Appointment.jsx";
 import NearbyHospital from "./NearbyHospital.jsx";
 const token = localStorage.getItem("token");
+const API_URL = import.meta.env.VITE_API_URL;
 
 import axios from "axios";
 
@@ -39,7 +40,7 @@ async (patientId) => {
   try {
 
     const response = await axios.get(
-      `http://localhost:5000/api/appointments/patient/${patientId}`,
+      `${API_URL}/api/appointments/patient/${patientId}`,
       {
       headers:{
       Authorization:
@@ -66,7 +67,7 @@ async (patientId) => {
     try {
 
       const response = await axios.get(
-        `http://localhost:5000/api/prescriptions/patient/${patientId}`
+        `${API_URL}/api/prescriptions/patient/${patientId}`
       );
 
       setPrescriptions(response.data);
@@ -133,7 +134,7 @@ async (patientId) => {
     try {
 
       const response = await axios.put(
-        `http://localhost:5000/api/patients/${patient._id}`,
+        `${API_URL}/api/patients/${patient._id}`,
         editForm
       );
 
@@ -906,7 +907,7 @@ async (patientId) => {
                       <td>
 
                         <a
-                          href={`http://localhost:5000/api/prescriptions/download/${prescription._id}`}
+                          href={`${API_URL}/api/prescriptions/download/${prescription._id}`}
                           target="_blank"
                           rel="noreferrer"
                           className="btn btn-primary btn-sm"

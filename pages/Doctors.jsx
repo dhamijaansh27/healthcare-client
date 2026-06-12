@@ -1,6 +1,7 @@
 import { useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Doctors() {
     const [doctors, setDoctors] = useState([]);
@@ -11,7 +12,7 @@ function Doctors() {
     const fetchDoctors = async () => {
 
       const response = await axios.get(
-        "http://localhost:5000/api/doctors"
+        `${API_URL}/api/doctors`
       );
 
       setDoctors(response.data);

@@ -8,7 +8,6 @@ import Appointment from '../pages/Appointment';
 import PatientServices from '../pages/PatientServices';
 import PatientDashboard from '../pages/PatientDashboard';
 import DoctorDashboard from '../pages/DoctorDashboard';
-import BedAvailability from '../pages/BedAvailabilty';
 import MedicalHistory from '../pages/MedicalHistory';
 import NearbyHospital from '../pages/NearbyHospital';
 import Layout from '../components/Layout';
@@ -73,12 +72,6 @@ function App() {
         <Route path="/appointment" element={
           <Layout>
             <Appointment />
-          </Layout>
-        } />
-
-        <Route path="/bed-availability" element={
-          <Layout>
-            <BedAvailability />
           </Layout>
         } />
 
