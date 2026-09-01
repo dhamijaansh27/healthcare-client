@@ -117,27 +117,39 @@ function HospitalDashboard() {
 
     };
 
-    const updateStatus = async (
-      appointmentId,
-      status
-    ) => {
+    const updateStatus = async (appointmentId, status) => {
+  try {
 
-      try {
+    const response = await axios.put(
+      `${API_URL}/api/appointments/${appointmentId}/status`,
+      { status }
+    );
 
-        await axios.put(
-          `${API_URL}/api/appointments/${appointmentId}/status`,
-          { status }
-        );
+    // Update the appointment immediately in the UI
+    setAppointments((prevAppointments) =>
+      prevAppointments.map((appointment) =>
+        appointment._id === appointmentId
+          ? {
+              ...appointment,
+              status: status
+            }
+          : appointment
+      )
+    );
 
-        fetchAppointments();
+    console.log("Status updated:", response.data);
 
-      } catch (error) {
+  } catch (error) {
 
-        console.log(error);
+    console.error(
+      "Status update error:",
+      error.response?.data || error.message
+    );
 
-      }
+    alert("Failed to update appointment status");
 
-    };
+  }
+};
 
     const savePrescription = async () => {
 
