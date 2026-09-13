@@ -34,33 +34,23 @@ function PatientDashboard() {
       appointment.status === "Approved"
   );
 
-  const fetchAppointments =
-async (patientId) => {
+  const fetchAppointments = async (patientId) => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/appointments/patient/${patientId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
-  try {
+      setAppointments(response.data);
 
-    const response = await axios.get(
-      `${API_URL}/api/appointments/patient/${patientId}`,
-      {
-      headers:{
-      Authorization:
-      `Bearer ${token}`
-      }
+    } catch (error) {
+      console.error("FETCH APPOINTMENTS ERROR:", error);
     }
-      
-    );
-
-    setAppointments(
-      response.data
-    );
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
+  };
 
 
   const fetchPrescriptions = async (patientId) => {

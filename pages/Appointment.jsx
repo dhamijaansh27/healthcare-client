@@ -78,63 +78,162 @@ function Appointment({ setActiveSection,fetchAppointments }) {
 
   };
 
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+//     e.preventDefault();
     
-    if (!patient) {
-      alert("Please login first");
-      navigate("/login");
-      return;
-    }
+//     if (!patient) {
+//       alert("Please login first");
+//       navigate("/login");
+//       return;
+//     }
 
-    try {
-      console.log("TOKEN =", token);
+//     try {
+//       console.log("TOKEN =", token);
 
-      await axios.post(
-        `${API_URL}/api/appointments/create`,
-        {
-          patientId: patient._id,
-          hospitalId: formData.hospitalId,
-          doctorId: formData.doctorId,
-          appointmentDate: formData.appointmentDate,
-          appointmentTime: formData.appointmentTime,
-          problem: formData.problem
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+//       // await axios.post(
+//       //   `${API_URL}/api/appointments/create`,
+//       //   {
+//       //     patientId: patient._id,
+//       //     hospitalId: formData.hospitalId,
+//       //     doctorId: formData.doctorId,
+//       //     appointmentDate: formData.appointmentDate,
+//       //     appointmentTime: formData.appointmentTime,
+//       //     problem: formData.problem
+//       //   },
+//       //   {
+//       //     headers: {
+//       //       Authorization: `Bearer ${token}`
+//       //     }
+//       //   }
+//       // );
 
-      await fetchAppointments(
-        patient._id
-      );
+//       // await fetchAppointments(
+//       //   patient._id
+//       // );
 
-      alert("Appointment Booked Successfully");
+//       // alert("Appointment Booked Successfully");
       
 
-      setFormData({
-        hospitalId: "",
-        doctorId: "",
-        appointmentDate: "",
-        appointmentTime: "",
-        problem: ""
-      });
+//       // setFormData({
+//       //   hospitalId: "",
+//       //   doctorId: "",
+//       //   appointmentDate: "",
+//       //   appointmentTime: "",
+//       //   problem: ""
+//       // });
 
-      setDoctors([]);
-      setActiveSection("dashboard");
+//       // setDoctors([]);
+//       // setActiveSection("dashboard");
 
-    } catch (error) {
+//       const response = await axios.post(
+//   `${API_URL}/api/appointments/create`,
+//   {
+//     patientId: patient._id,
+//     hospitalId: formData.hospitalId,
+//     doctorId: formData.doctorId,
+//     appointmentDate: formData.appointmentDate,
+//     appointmentTime: formData.appointmentTime,
+//     problem: formData.problem
+//   },
+//   {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   }
+// );
 
-      console.log(error);
+// console.log("BOOKING RESPONSE:", response.data);
+// console.log("BOOKING STATUS:", response.status);
 
-      alert("Failed to book appointment");
+// await fetchAppointments(patient._id);
 
-    }
+// alert("Appointment Booked Successfully");
 
-  };
+//     } catch (error) {
+
+//       // console.log(error);
+
+//       // alert("Failed to book appointment");
+
+//       console.error("BOOKING ERROR:", error);
+//   console.error("Response:", error.response?.data);
+//   console.error("Status:", error.response?.status);
+
+//   alert("Failed to book appointment");
+//     }
+
+//   };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!patient) {
+    alert("Please login first");
+    navigate("/login");
+    return;
+  }
+
+  try {
+    console.log("1. Starting booking");
+    console.log("TOKEN =", token);
+
+    const response = await axios.post(
+      `${API_URL}/api/appointments/create`,
+      {
+        patientId: patient._id,
+        hospitalId: formData.hospitalId,
+        doctorId: formData.doctorId,
+        appointmentDate: formData.appointmentDate,
+        appointmentTime: formData.appointmentTime,
+        problem: formData.problem
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    console.log("2. POST SUCCESS");
+    console.log("Booking response:", response.data);
+    console.log("Booking status:", response.status);
+
+    console.log("3. Fetching appointments");
+
+    await fetchAppointments(patient._id);
+
+    console.log("4. Fetch appointments finished");
+
+    alert("Appointment Booked Successfully");
+
+    console.log("5. Resetting form");
+
+    setFormData({
+      hospitalId: "",
+      doctorId: "",
+      appointmentDate: "",
+      appointmentTime: "",
+      problem: ""
+    });
+
+    setDoctors([]);
+
+    console.log("6. Setting dashboard");
+
+    setActiveSection("dashboard");
+
+    console.log("7. DONE");
+
+  } catch (error) {
+    console.error("BOOKING ERROR:", error);
+    console.error("ERROR MESSAGE:", error.message);
+    console.error("ERROR RESPONSE:", error.response?.data);
+    console.error("ERROR STATUS:", error.response?.status);
+
+    alert("Failed to book appointment");
+  }
+};
 
   return (
     <div className="container mt-5">
